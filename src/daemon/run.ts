@@ -15,6 +15,7 @@ import { requestAuthorization } from './authorize.js';
 import Fastify, { type FastifyInstance } from 'fastify';
 import FastifyFormBody from "@fastify/formbody";
 import FastifyView from '@fastify/view';
+import cors from "@fastify/cors";
 import Handlebars from "handlebars";
 import {authorizeRequestWebHandler, processRequestWebHandler} from "./web/authorize.js";
 import {processRegistrationWebHandler} from "./web/authorize.js";
@@ -184,6 +185,8 @@ class Daemon {
                 urlPrefix 
             }
         });
+
+        await this.fastify.register(cors, { origin: true });
 
         this.fastify.listen({ port: this.config.authPort, host: this.config.authHost });
 
